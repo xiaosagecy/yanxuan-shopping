@@ -5,6 +5,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 引入全局公共样式
+import '@/style/common.less'
 
 // 测试持久化插件是否生效
 // 提交user mutation函数进行修改
