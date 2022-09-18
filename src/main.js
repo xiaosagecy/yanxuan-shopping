@@ -8,8 +8,7 @@ import store from './store'
 // 引入全局公共样式
 import '@/style/common.less'
 
-// 测试持久化插件是否生效
-// 提交user mutation函数进行修改
-store.commit('user/setProfile', 100001)
+// 注册全局插件
+import componentPlugin from '@/components'
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).use(componentPlugin).use(store).use(router).mount('#app')
