@@ -6,21 +6,14 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { getCategory } from '@/api/home'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
   setup () {
-    const list = ref([])
-
-    async function fetchCategory () {
-      const res = await getCategory()
-      console.log(res)
-      list.value = res.result
-    }
-
-    // 选择一个合适的时机调用函数 - onMounted
-    fetchCategory()
-
+    const store = useStore()
+    const list = computed(() => {
+      return store.state.category.categoryList
+    })
     return { list }
   }
 }

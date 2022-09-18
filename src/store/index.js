@@ -3,13 +3,15 @@
 import { createStore } from 'vuex'
 import user from './modules/user'
 import cart from './modules/cart'
+import category from './modules/category'
 // 引入vuex持久化
 import createPersistedstate from 'vuex-persistedstate'
 
 export default createStore({
   modules: {
     user,
-    cart
+    cart,
+    category
   },
   plugins: [
     // 放入vuex的三方插件 插件是对于vuex本身功能增强
