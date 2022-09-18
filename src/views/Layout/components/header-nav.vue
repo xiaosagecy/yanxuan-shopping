@@ -1,17 +1,30 @@
 <template>
   <ul class="app-header-nav">
     <li class="home"><RouterLink to="/">首页</RouterLink></li>
-    <li><a href="#">美食</a></li>
-    <li><a href="#">餐厨</a></li>
-    <li><a href="#">艺术</a></li>
-    <li><a href="#">电器</a></li>
-    <li><a href="#">居家</a></li>
-    <li><a href="#">洗护</a></li>
-    <li><a href="#">孕婴</a></li>
-    <li><a href="#">服装</a></li>
-    <li><a href="#">杂货</a></li>
+    <li v-for="item in list" :key="item.id"><a href="#">{{item.name}}</a></li>
   </ul>
 </template>
+
+<script>
+import { ref } from 'vue'
+import { getCategory } from '@/api/home'
+export default {
+  setup () {
+    const list = ref([])
+
+    async function fetchCategory () {
+      const res = await getCategory()
+      console.log(res)
+      list.value = res.result
+    }
+
+    // 选择一个合适的时机调用函数 - onMounted
+    fetchCategory()
+
+    return { list }
+  }
+}
+</script>
 
 <style scoped lang='less'>
 .app-header-nav {

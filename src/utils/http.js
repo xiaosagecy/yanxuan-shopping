@@ -15,7 +15,7 @@ instance.interceptors.request.use(config => {
 
 instance.interceptors.response.use(response => {
   // 状态码为2xx进入该函数
-  return response
+  return response.data
 }, error => {
   // 状态码超出2xx触发该函数
   return Promise.reject(error)
