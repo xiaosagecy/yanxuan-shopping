@@ -1,34 +1,60 @@
 <template>
   <div class="home-category">
-    <ul class="menu">
-      <li v-for="item in categoryList" :key="item.id">
-        <RouterLink to="/">{{ item.name }}</RouterLink>
-        <template v-if="item.children.length > 0">
-          <!-- children里面的前俩项？数组的前俩项拆出来 slice(0,2) -->
-          <RouterLink v-for="i in item.children" :key="i.id" to="/">{{
-            i.name
-          }}</RouterLink>
-        </template>
-        <!-- 弹层layer位置 -->
-        <div class="layer">
-          <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
-          <ul>
-            <li v-for="i in item.goods" :key="i">
-              <RouterLink to="/">
-                <img :src="i.picture" alt="" />
-                <div class="info">
-                  <p class="name ellipsis-2">
-                    {{ i.name }}
-                  </p>
-                  <p class="desc ellipsis">{{ i.desc }}</p>
-                  <p class="price"><i>¥</i>{{ i.price }}</p>
-                </div>
-              </RouterLink>
-            </li>
-          </ul>
-        </div>
-      </li>
-    </ul>
+     <!--
+      多模板 + v-if条件渲染实现
+     -->
+    <!-- 数据返回之后要显示的真实模板 -->
+    <template v-if="categoryList.length > 0">
+      <ul class="menu">
+        <li v-for="item in categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
+          <template v-if="item.children.length > 0">
+            <!-- children里面的前俩项？数组的前俩项拆出来 slice(0,2) -->
+            <RouterLink v-for="i in item.children" :key="i.id" to="/">{{
+              i.name
+            }}</RouterLink>
+          </template>
+          <!-- 弹层layer位置 -->
+          <div class="layer">
+            <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
+            <ul>
+              <li v-for="i in item.goods" :key="i">
+                <RouterLink to="/">
+                  <img :src="i.picture" alt="" />
+                  <div class="info">
+                    <p class="name ellipsis-2">
+                      {{ i.name }}
+                    </p>
+                    <p class="desc ellipsis">{{ i.desc }}</p>
+                    <p class="price"><i>¥</i>{{ i.price }}</p>
+                  </div>
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </template>
+    <!-- 数据返回之前的骨架屏模板 -->
+    <template v-else>
+      <ul class="menu">
+        <li v-for="i in 9" :key="i">
+          <XtxSkeleton
+            :width="40"
+            :height="20"
+            style="margin-right: 5px"
+            bg="rgba(255,255,255,0.2)"
+          />
+          <XtxSkeleton
+            :width="50"
+            :height="20"
+            bg="rgba(255,255,255,0.2)"
+            style="margin-right: 5px"
+          />
+          <XtxSkeleton :width="50" :height="20" bg="rgba(255,255,255,0.2)" />
+        </li>
+      </ul>
+    </template>
   </div>
 </template>
 
