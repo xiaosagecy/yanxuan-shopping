@@ -1,5 +1,5 @@
 <template>
-  <div class="homeBox">this is Home</div>
+  <div class="homeBox" style="height: 2000px">this is Home</div>
 </template>
 
 <script>
