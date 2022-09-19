@@ -32,7 +32,8 @@
     根据当前的滚动距离 控制show类型的显示 如果超过某个距离 show显示 如果不超过某个距离 show不显示
  */
 import HeaderNav from './header-nav'
-import { useWindowScroll } from '@vueuse/core'
+// import { useWindowScroll } from '@vueuse/core'
+import { useWindowScroll } from '@/components/compisitions/useWindowScroll'
 
 export default {
   name: 'AppHeaderSticky',
