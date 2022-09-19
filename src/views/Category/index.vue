@@ -16,6 +16,20 @@
           </li>
         </ul>
       </div>
+      <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+        <div class="head">
+          <h3>- {{item.name}} -</h3>
+          <XtxMore to="/" />
+        </div>
+        <div class="body">
+          <RouterLink to="/" class="goods-item" v-for="good in item.goods" :key="good">
+            <img src="" />
+            <p class="name ellipsis">{{good.name}}</p>
+            <p class="desc ellipsis">{{good.desc}}</p>
+            <p class="price">&yen;{{good.price}}</p>
+          </RouterLink>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -111,6 +125,30 @@ export default {
       display: flex;
       justify-content: space-around;
       padding: 0 40px 30px;
+    }
+  }
+    .goods-item {
+    display: block;
+    width: 220px;
+    padding: 20px 30px;
+    text-align: center;
+    img {
+      width: 160px;
+      height: 160px;
+    }
+    p {
+      padding-top: 10px;
+    }
+    .name {
+      font-size: 16px;
+    }
+    .desc {
+      color: #999;
+      height: 29px;
+    }
+    .price {
+      color: @priceColor;
+      font-size: 20px;
     }
   }
 }
