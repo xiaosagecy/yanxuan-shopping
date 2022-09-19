@@ -16,6 +16,7 @@
           </li>
         </ul>
       </div>
+      <!-- 其他分类 -->
       <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
         <div class="head">
           <h3>- {{item.name}} -</h3>
@@ -35,29 +36,15 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { findBanner } from '@/api/home'
-import { findTopCategory } from '@/api/category'
-import { useRoute } from 'vue-router'
+import useBanner from './service/useBanner'
+import useCategory from './service/useCategory'
 export default {
   name: 'category-index',
   setup () {
-    const bannerList = ref([])
-    async function fetchList () {
-      const res = await findBanner()
-      bannerList.value = res.result
-    }
-    fetchList()
-
-    const categoryData = ref({})
-    const route = useRoute() // this.$route
-    async function fetchCategory () {
-      // 如何在setup获取路由参数id
-      const res = await findTopCategory(route.params.id)
-      console.log(res)
-      categoryData.value = res.result
-    }
-    fetchCategory()
+    // banner功能
+    const { bannerList } = useBanner()
+    // 分类功能
+    const { categoryData } = useCategory()
     return {
       bannerList,
       categoryData

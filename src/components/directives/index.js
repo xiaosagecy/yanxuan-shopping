@@ -21,7 +21,7 @@ const plugin = {
           el,
           ([{ isIntersecting }], observerElement) => {
             // 进入视口 true  出去视口 false
-            console.log(isIntersecting)
+            // console.log(isIntersecting)
             if (isIntersecting) {
               // 满足条件把图片的url交给图片的src属性 浏览器会自动发送图片请求
               el.src = binding.value
