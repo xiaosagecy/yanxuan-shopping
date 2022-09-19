@@ -1,17 +1,17 @@
-// 自定义useWindowScroll
-import {ref} from 'vue'
-function useWindowScroll(){
-  // 监听滚动事件 不断地 把当前距离顶部的距离赋值给h
-  window.addEventListener('scroll',()=> {
-    // 定义一个响应式的y
-    const y = ref(0)
-    //        当前scroll距离顶部的距离的像素值
+// 自定义的useWindowScroll
+// 1. 函数 参数和返回值[Ref[number]]
+// 2. 根据滚动事件拿到当前滚动距离顶部的像素值 不断地交给y
+import { ref } from 'vue'
+function useWindowScroll () {
+  const y = ref(0)
+  // 核心逻辑：监听滚动行为的发生的 拿到当前距离顶部的像素值 不断地交给y
+  window.addEventListener('scroll', () => {
     const h = document.documentElement.scrollTop
-
     y.value = h
   })
-
-  return { y }
+  return {
+    y
+  }
 }
 
 export { useWindowScroll }

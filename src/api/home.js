@@ -9,3 +9,8 @@ export function getCategory () {
 export function findBanner () {
   return request('home/banner', 'GET')
 }
+
+// 新鲜好物
+export function findNew () {
+  return request('home/new', 'GET')
+}
