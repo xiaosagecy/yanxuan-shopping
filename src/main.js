@@ -10,5 +10,7 @@ import '@/style/common.less'
 
 // 注册全局插件
 import componentPlugin from '@/components'
+// 注册全局自定义指令
+import directivePlugin from '@/components/directives'
 
-createApp(App).use(componentPlugin).use(store).use(router).mount('#app')
+createApp(App).use(directivePlugin).use(componentPlugin).use(store).use(router).mount('#app')

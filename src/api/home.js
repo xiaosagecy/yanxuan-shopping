@@ -14,3 +14,8 @@ export function findBanner () {
 export function findNew () {
   return request('home/new', 'GET')
 }
+
+// 人气推荐
+export function findHot () {
+  return request('home/hot', 'GET')
+}

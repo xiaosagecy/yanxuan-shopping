@@ -6,11 +6,11 @@
         <home-category-vue />
         <!-- banner轮播图 -->
         <home-banner-vue />
-        <!-- test -->
+        <!-- 新鲜好物 -->
         <HomePanel title="新鲜好物" subTitle="新鲜出炉 品质保障">
           <template #right><xtx-more /></template>
           <template #main>
-            <ul ref="pannel" class="goods-list">
+            <ul class="goods-list">
               <li v-for="item in newList" :key="item.id">
                 <RouterLink to="/">
                   <img :src="item.picture" alt="">
@@ -21,7 +21,22 @@
             </ul>
           </template>
         </HomePanel>
-        <!--  test end-->
+        <!-- 人气推荐 -->
+        <HomePanel title="人气推荐" subTitle="人气推荐 品质靠谱">
+          <template #right><xtx-more /></template>
+          <template #main>
+            <ul class="goods-list">
+              <li v-for="item in hotList" :key="item.id">
+                <RouterLink to="/">
+                  <!-- 使用图片懒加载指令 -->
+                  <img v-lazy-img="item.picture" alt="">
+                  <p class="name">{{item.name}}</p>
+                  <p class="desc">{{item.alt}}</p>
+                </RouterLink>
+              </li>
+            </ul>
+          </template>
+        </HomePanel>
       </div>
     </div>
   </div>
@@ -31,7 +46,7 @@
 import homeBannerVue from './components/home-banner.vue'
 import homeCategoryVue from './components/home-category.vue'
 import HomePanel from './components/home-pannel.vue'
-import { findNew } from '@/api/home'
+import { findNew, findHot } from '@/api/home'
 import { ref } from 'vue'
 export default {
   name: 'home-index',
@@ -41,13 +56,22 @@ export default {
     HomePanel
   },
   setup () {
+    // 新鲜好物数据
     const newList = ref([])
     async function getNewList () {
       const res = await findNew()
       newList.value = res.result
     }
     getNewList()
-    return { newList }
+
+    // 人气推荐数据
+    const hotList = ref([])
+    async function getHotList () {
+      const res = await findHot()
+      hotList.value = res.result
+    }
+    getHotList()
+    return { newList, hotList }
   }
 }
 </script>
