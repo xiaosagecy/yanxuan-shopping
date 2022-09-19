@@ -19,7 +19,7 @@ const routes = [
         name: 'home'
       },
       {
-        path: 'category',
+        path: 'category/:id', // params传参
         component: Category,
         name: 'category'
       }

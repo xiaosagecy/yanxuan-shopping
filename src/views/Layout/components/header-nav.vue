@@ -1,7 +1,9 @@
 <template>
   <ul class="app-header-nav">
     <li class="home"><RouterLink to="/">首页</RouterLink></li>
-    <li v-for="item in list" :key="item.id"><a href="#">{{item.name}}</a></li>
+    <li v-for="item in list" :key="item.id">
+      <router-link :to="`/category/${item.id}`">{{ item.name }}</router-link>
+    </li>
   </ul>
 </template>
 
