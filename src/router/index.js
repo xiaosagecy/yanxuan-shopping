@@ -6,6 +6,7 @@ import Layout from '@/views/Layout'
 import Login from '@/views/Login'
 import Home from '@/views/Home'
 import Category from '@/views/Category'
+import Good from '@/views/Good'
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
         path: 'category/:id', // params传参
         component: Category,
         name: 'category'
+      },
+      {
+        path: 'good/:id', // params传参
+        component: Good,
+        name: 'good'
       }
     ]
   },
