@@ -87,6 +87,88 @@ vue中的插件使用
    }
    ```
 
+# 知识回顾-03
+```
+<!-- 
+  1. 原型链
+     对于对象属性（方法）查找机制的描述
+     当前对象身上如果找不到就委托给它的原型对象去找
+
+  2. 作用域链
+     对于变量的查找机制的描述
+     当前作用域中找不到会去外层的作用域中找 但是js里是静态作用域 不是运行时决定的
+     作用链的形成是在解析的时候就已经确定下来的了 不是在代码运行的时候决定的
+
+  3. 闭包
+     内部函数引用了外部函数中的变量 延长作用域链
+     比如说在一个函数中return了另外一个函数 在这个函数中使用了外层函数变量 外层执行之后
+     由于引用的关系 导致外层函数中的变量没有被销毁 体现出来的就是闭包
+
+     闭包有哪些场景？
+      1. 立即执行函数  (function(){})()
+      2. 保护内部的变量
+      3. setup  return { fn }
+      4. vue2 响应式的实现  data Object.defineProperty()
+      5. react hook
+
+     闭包有什么缺点？
+      只要用闭包 就必定会内存泄漏 不对！！！
+
+      内存泄漏  是指在我们不知道的情况下 无法预期情况下 不小心的情况 导致该销毁的内存没有销毁
+      这个时候才能算是内存泄漏
+
+      如果我明确就是想使用闭包保护变量不销毁的特性 而去主动实现了一些功能！！！
+
+  vue中  
+    1. 在模板中使用到的都是当前组件对象身上的属性或者方法 走的是原型链机制
+    2. 在script标签声明的变量 + 各个函数中 setup methods..方法中声明的变量 走的是作用域链
+-->
+
+<script>
+  // a  b都为对象 b对象成为a对象的原型对象  显式的方式创建了一个原型链出来
+  const a = {
+    name: 'cp'
+  }
+  const b = {
+    age: 18
+  }
+  Object.setPrototypeOf(a, b) // a的原型对象指向b
+  console.log(a.age) // 从a找 a不找就去它的原型对象b上面找
+
+  const name = 'this is global name'
+  function foo () {
+    console.log(name)
+  }
+  function bar () {
+    const name = 'this is bar name'
+    foo()
+  }
+  bar()  // name打印出来的是什么？
+
+
+  function getPerson () {
+    const user = {
+      name: 'cp'
+    }
+    return {
+      getName () {
+        return user.name
+      },
+      setName (newName) {
+        user.name = newName
+      }
+    }
+  }
+
+  const p = getPerson()
+  console.log(p.getName())
+  p.setName('瑞哥')
+  console.log(p.getName())
+  p = null
+
+</script>
+```
+
 # 路由的缓存
 
 1. 机制: path 不变的情况下 占位符参数发生了变化 vue-router 会默认复用组件
