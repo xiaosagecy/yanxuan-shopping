@@ -124,6 +124,7 @@ vue中的插件使用
 
 
 # vee-validate表单检验示例
+> 使用Form把需要检验的范围包起来，Field就相当于input标签
 ```js
 <template>
   <div id="app">
