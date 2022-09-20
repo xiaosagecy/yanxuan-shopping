@@ -10,6 +10,8 @@ import CheckBox from './CheckBox'
 import Dialog from './Dialog'
 import Sku from './Sku'
 import ImageView from './ImageView'
+import XtxNumber from './NumberBox'
+
 export default {
   install (app) {
     app.component(Skeleton.name, Skeleton)
@@ -24,5 +26,6 @@ export default {
     app.component(Dialog.name, Dialog)
     app.component(Sku.name, Sku)
     app.component(ImageView.name, ImageView)
+    app.component(XtxNumber.name, XtxNumber)
   }
 }

@@ -5,6 +5,7 @@
       <div class="goods-info">
         <div class="media">
           <!-- 图片预览区 -->
+          <XtxImageView :imageList="goodData.mainPictures" />
           <!-- 统计数量 -->
           <ul class="goods-sales">
             <li>
@@ -60,7 +61,9 @@
             </dl>
           </div>
           <!-- sku组件 -->
+          <XtxGoodSku :goods="goodData" @change="skuChange" />
           <!-- 数据组件 -->
+          <XtxNumber v-model="goodCount" />
           <!-- 按钮组件 -->
         </div>
       </div>
@@ -90,8 +93,18 @@ export default {
       goodData.value = res.result
     }
     loadData()
+
+    // sku
+    function skuChange (sku) {
+      console.log(sku)
+    }
+
+    const goodCount = ref(2)
+
     return {
-      goodData
+      goodData,
+      skuChange,
+      goodCount
     }
   }
 }
