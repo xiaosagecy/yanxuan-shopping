@@ -70,9 +70,13 @@
       <div class="goods-footer">
         <div class="goods-article">
           <!-- 商品详情 -->
+          <goodDetailVue :goods="goodData"/>
         </div>
         <!-- 24热榜+专题推荐 -->
-        <div class="goods-aside"></div>
+        <div class="goods-aside">
+          <goodHotVue type="1"/>
+          <goodHotVue type="2"/>
+        </div>
       </div>
     </div>
   </div>
@@ -82,9 +86,14 @@
 import { ref } from 'vue'
 import { findGoods } from '@/api/good'
 import { useRoute } from 'vue-router'
-
+import goodDetailVue from './components/good-detail.vue'
+import goodHotVue from './components/good-hot.vue'
 export default {
   name: 'good-index',
+  components: {
+    goodDetailVue,
+    goodHotVue
+  },
   setup () {
     const goodData = ref({})
     const route = useRoute()

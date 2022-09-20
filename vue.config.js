@@ -15,5 +15,11 @@ module.exports = defineConfig({
         path.join(__dirname, './src/style/var.less')
       ]
     }
+  },
+  chainWebpack: config => {
+    config.plugin('html').tap(args => {
+      args[0].title = '严选商城' // 修改项目标题
+      return args
+    })
   }
 })
