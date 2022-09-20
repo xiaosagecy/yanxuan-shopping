@@ -121,6 +121,76 @@ vue中的插件使用
    3. 使用的时候传入不同的内容
 
 3. 纯展示类组件的封装
+
+
+# vee-validate表单检验示例
+```js
+<template>
+  <div id="app">
+    <Form ref="formRef" :validation-schema="schema" v-slot="{ errors }">
+      <div>账号：<Field name="username" v-model="form.username" /></div>
+      <!-- 当账号输入有错误（校验规则没通过）/没有输入密码会展示 -->
+      <div v-if="errors.username"><i class="iconfont icon-warning" /> {{errors.username}}</div>
+
+      <div>密码：<Field name="password" v-model="form.password" /></div>
+      <!-- 当密码输入有错误（校验规则没通过）/没有输入密码会展示 -->
+      <div v-if="errors.password"><i class="iconfont icon-warning" /> {{errors.password}}</div>
+    </Form>
+    <button @click='doLogin'>登陆</button>
+  </div>
+</template>
+
+<script>
+// npm i vee-validate 第三方包 用于校验表单
+import { Form, Field } from 'vee-validate'
+import { reactive,ref } from 'vue'
+export default {
+  name: 'App',
+  components: {
+    Form, Field
+  },
+  setup(){
+    // 表单
+    const form = reactive({
+      username: '',
+      password: ''
+    })
+    // 检验规则
+    const schema = {
+      username(value){
+        // 密码不通过 给提示 通过return true
+        if(!value) return '请输入账号'
+        return true
+      },
+      password(value){
+        if(!value) return '请输入密码'
+        if(!/^\w{6,24}$/.test(value)) return '密码长度为6-24位'
+        return true
+      }
+    }
+
+    const formRef = ref(null)
+    const doLogin = async () => {
+      // 1. 获取表单组件的实例对象
+      // 2. 调用它身上的validate -> promise对象
+      const result = await formRef.value.validate()
+      console.log(result) // 所有的表单都通过校验时才返回true
+      if (result) {
+        console.log('去登陆')
+      }
+    }
+
+    return {
+      form, schema,formRef,doLogin
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
+
 ```
 
 ## Project setup
