@@ -50,6 +50,10 @@ export default {
     return {
       goodList, TYPES
     }
+    // goodList, TYPES // 借助setup return东西模板中可以拿到
+    // 重要！！
+    // 模板中用到的所有的属性和回调函数都是在组件实例身上存在的才可以 访问的是对象的属性和方法！！！！
+    // 访问的不是作用域中的变量！！！！！！！
   }
 }
 </script>

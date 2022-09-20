@@ -58,7 +58,7 @@
             <a href="javascript:;">搜索推荐</a>
             <a href="javascript:;">友情链接</a>
           </p>
-          <p>CopyRight © 小兔鲜儿</p>
+          <p>CopyRight © 严选商城</p>
         </div>
       </div>
     </div>

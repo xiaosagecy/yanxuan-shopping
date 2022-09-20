@@ -1,7 +1,7 @@
 <template>
   <header class="app-header">
     <div class="container">
-      <h1 class="logo"><RouterLink to="/">小兔鲜</RouterLink></h1>
+      <h1 class="logo"><RouterLink to="/">严选商城</RouterLink></h1>
       <!-- 替换成header-nav组件 ul列表替换一下即可 -->
       <header-nav-vue />
       <div class="search">
@@ -41,7 +41,7 @@ export default {
       height: 132px;
       width: 100%;
       text-indent: -9999px;
-      background: url("~@/assets/images/logo.png") no-repeat center 18px /
+      background: url("~@/assets/images/logo1.png") no-repeat center 18px /
         contain;
     }
   }
