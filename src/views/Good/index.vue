@@ -65,6 +65,7 @@
           <!-- 数据组件 -->
           <XtxNumber v-model="goodCount" />
           <!-- 按钮组件 -->
+          <XtxButton type="primary" class="btn" @click="addCart">加入购物车</XtxButton>
         </div>
       </div>
       <div class="goods-footer">
@@ -85,9 +86,10 @@
 <script>
 import { ref } from 'vue'
 import { findGoods } from '@/api/good'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import goodDetailVue from './components/good-detail.vue'
 import goodHotVue from './components/good-hot.vue'
+import { useStore } from 'vuex'
 export default {
   name: 'good-index',
   components: {
@@ -104,16 +106,39 @@ export default {
     loadData()
 
     // sku
+    let skuObj = {}
+    // 当商品规格选中触发
+    // {skuId: '300523142', price: '73.90', oldPrice: '75.90', inventory: 5304, specsText: '规格：四层，27卷/箱'}
     function skuChange (sku) {
       console.log(sku)
+      skuObj = sku
     }
 
-    const goodCount = ref(2)
+    const goodCount = ref(1)
+
+    // 加入购物车
+    const store = useStore()
+    const router = useRouter()
+    const addCart = () => {
+      // 先判断token是否为真，为真则是已登陆,为假就跳转登陆页
+      const token = store.state.user.profile.token
+      if (!token) {
+        router.push('/login')
+      } else {
+        // 正式进行加入购物车业务
+        // vuex管理的方式: 数据相关vuex + 组件触发action
+        store.dispatch('cart/fetchInsertCart', {
+          skuId: skuObj.skuId,
+          count: goodCount.value
+        })
+      }
+    }
 
     return {
       goodData,
       skuChange,
-      goodCount
+      goodCount,
+      addCart
     }
   }
 }
@@ -262,5 +287,9 @@ export default {
       }
     }
   }
+}
+.btn {
+  margin-top: 20px;
+  margin-left: 60px;
 }
 </style>

@@ -16,8 +16,8 @@ export default createStore({
   plugins: [
     // 放入vuex的三方插件 插件是对于vuex本身功能增强
     createPersistedstate({
-      key: 'erabbit-client-pc-store', // 存入本地时key
-      paths: ['user'] // 哪个模块要使用持久化的机制
+      key: 'PC-STORE', // 存入本地时key
+      paths: ['user', 'cart'] // 哪个模块要使用持久化的机制
     })
   ]
 })
