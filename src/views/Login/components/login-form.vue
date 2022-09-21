@@ -53,6 +53,7 @@
 import { Form, Field } from 'vee-validate'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 // 2.定义表单需要的表单的对象以及校验对象
 // 3.在模版使用Form组件包裹整个表单区域 并且绑定规则对象
 // 4.使用Field组件替换我们原生的input标签 添加v-model指定校验规则字段
@@ -84,6 +85,8 @@ export default {
 
     const formRef = ref(null)
     const store = useStore()
+    const route = useRoute()
+    const router = useRouter() // this.$router
     const doLogin = async () => {
       // 1.获取表单组件实例对象
       // 2.调用它身上的validate  -> promise对象
@@ -92,7 +95,15 @@ export default {
       if (res) {
         // 检验通过 返回true 进行登陆处理
         // vuex管理数据 + 组件只负责触发action函数
-        store.dispatch('user/fetchProfile', form)
+        await store.dispatch('user/fetchProfile', form)
+        // 如果当前url携带参数有redirect字段 就跳转到对应的页面 否则跳转首页
+        const redirect = route.query.redirect
+        if (redirect) {
+          // decodeURIComponent() 方法用于解码由 encodeURIComponent 方法或者其它类似方法编码的部分统一资源标识符（URI）。
+          router.replace(decodeURIComponent(redirect))
+        } else {
+          router.replace('/')
+        }
       }
     }
 

@@ -1,5 +1,8 @@
 // 封装axios
 import axios from 'axios'
+// 不要在组件以外的地方使用useStore函数
+// import { useStore } from 'vuex' (❌)
+import store from '@/store'
 
 const instance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -7,6 +10,11 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(config => {
+  const token = store.state.user.profile.token
+  if (token) {
+    // 在请求头注入token
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 }, error => {
   // 对请求错误做相应处理

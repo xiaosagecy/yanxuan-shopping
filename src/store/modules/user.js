@@ -8,6 +8,9 @@ export default {
   mutations: {
     setProfile (state, payload) {
       state.profile = payload
+    },
+    removeProfile (state) {
+      state.profile = {}
     }
   },
   actions: {
