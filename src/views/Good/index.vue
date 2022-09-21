@@ -90,6 +90,7 @@ import { useRoute, useRouter } from 'vue-router'
 import goodDetailVue from './components/good-detail.vue'
 import goodHotVue from './components/good-hot.vue'
 import { useStore } from 'vuex'
+import Message from '@/components/Message/index'
 export default {
   name: 'good-index',
   components: {
@@ -110,7 +111,7 @@ export default {
     // 当商品规格选中触发
     // {skuId: '300523142', price: '73.90', oldPrice: '75.90', inventory: 5304, specsText: '规格：四层，27卷/箱'}
     function skuChange (sku) {
-      console.log(sku)
+      // console.log(sku)
       skuObj = sku
     }
 
@@ -119,18 +120,24 @@ export default {
     // 加入购物车
     const store = useStore()
     const router = useRouter()
-    const addCart = () => {
+    const addCart = async () => {
       // 先判断token是否为真，为真则是已登陆,为假就跳转登陆页
       const token = store.state.user.profile.token
       if (!token) {
         router.push('/login')
       } else {
+        // 先判断是否选择了商品规格
+        if (!skuObj.skuId) {
+          return Message({ type: 'warn', text: '请选择有效的商品规格！' })
+        }
         // 正式进行加入购物车业务
         // vuex管理的方式: 数据相关vuex + 组件触发action
-        store.dispatch('cart/fetchInsertCart', {
+        await store.dispatch('cart/fetchInsertCart', {
           skuId: skuObj.skuId,
           count: goodCount.value
         })
+
+        Message({ type: 'success', text: '加入购物车成功！' })
       }
     }
 

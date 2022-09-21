@@ -8,21 +8,20 @@
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="搜一搜" />
       </div>
-      <div class="cart">
-        <a class="curr" href="#">
-          <i class="iconfont icon-cart"></i><em>2</em>
-        </a>
-      </div>
+      <!-- 头部购物车图标 -->
+      <headerCartVue />
     </div>
   </header>
 </template>
 
 <script>
 import headerNavVue from './header-nav.vue'
+import headerCartVue from './header-cart.vue'
 export default {
   name: 'top-header',
   components: {
-    headerNavVue
+    headerNavVue,
+    headerCartVue
   }
 }
 </script>
