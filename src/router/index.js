@@ -7,6 +7,7 @@ import Login from '@/views/Login'
 import Home from '@/views/Home'
 import Category from '@/views/Category'
 import Good from '@/views/Good'
+import Cart from '@/views/Cart'
 
 const routes = [
   {
@@ -28,6 +29,11 @@ const routes = [
         path: 'good/:id', // params传参
         component: Good,
         name: 'good'
+      },
+      {
+        path: 'cart', 
+        component: Cart,
+        name: 'cart'
       }
     ]
   },

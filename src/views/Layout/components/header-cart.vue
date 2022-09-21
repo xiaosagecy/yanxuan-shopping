@@ -27,7 +27,7 @@
           <p>共 {{ allCount }} 件商品</p>
           <p>&yen;{{ priceCount }}</p>
         </div>
-        <XtxButton type="plain">去购物车结算</XtxButton>
+        <XtxButton type="plain" @click="$router.push('/cart')">去购物车结算</XtxButton>
       </div>
     </div>
   </div>

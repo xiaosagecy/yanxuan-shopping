@@ -8,6 +8,7 @@ import category from './modules/category'
 import createPersistedstate from 'vuex-persistedstate'
 
 export default createStore({
+  // strict: true, // 要求修改state中的数据只有一种方法必须提交mutation 否则会报错
   modules: {
     user,
     cart,
