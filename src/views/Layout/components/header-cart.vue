@@ -19,7 +19,7 @@
               <p class="count">x{{ i.count }}</p>
             </div>
           </RouterLink>
-          <i class="iconfont icon-close-new"></i>
+          <i class="iconfont icon-close-new" @click="delCart(i.skuId)"></i>
         </div>
       </div>
       <div class="foot">
@@ -35,6 +35,7 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import Message from '@/components/Message/index'
 export default {
   name: 'AppHeaderCart',
   setup () {
@@ -51,10 +52,16 @@ export default {
     const priceCount = computed(() => {
       return store.getters['cart/priceCount']
     })
+
+    const delCart = async (skuId) => {
+      await store.dispatch('cart/fetchDelCart', [skuId])
+      Message({ type: 'success', text: '删除成功' })
+    }
     return {
       cartList,
       allCount,
-      priceCount
+      priceCount,
+      delCart
     }
   }
 }
