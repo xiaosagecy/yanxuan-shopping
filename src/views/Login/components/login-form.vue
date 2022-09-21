@@ -54,6 +54,7 @@ import { Form, Field } from 'vee-validate'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
+import { findCartList } from '@/api/cart'
 // 2.定义表单需要的表单的对象以及校验对象
 // 3.在模版使用Form组件包裹整个表单区域 并且绑定规则对象
 // 4.使用Field组件替换我们原生的input标签 添加v-model指定校验规则字段
@@ -96,6 +97,10 @@ export default {
         // 检验通过 返回true 进行登陆处理
         // vuex管理数据 + 组件只负责触发action函数
         await store.dispatch('user/fetchProfile', form)
+        // 购物车数据获取一下然后存入本地 findCartList
+        const res = await findCartList()
+        store.commit('cart/setCartList', res.result)
+
         // 如果当前url携带参数有redirect字段 就跳转到对应的页面 否则跳转首页
         const redirect = route.query.redirect
         if (redirect) {

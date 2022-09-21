@@ -205,6 +205,49 @@ vue3 v-model 语法糖的小变化
 3. 所有的插件语法套路都是固定的 按照文档按部就班的配置即可
 ```
 
+# 知识回顾-05
+```
+# 函数式组件的封装
+
+1. 组件渲染的模式
+
+   1. 跟随 template 渲染 不受开发者的控制 直接跟着 vue 走
+   2. 命令式的方法调用渲染 受开发者控制 灵活性更加强
+
+2. 封装的前置知识
+
+   1. createVNode -> 创建虚拟 dom js 对象 [vue2 中没有开发这个方法 vue3 才开放了出来 h]
+   2. render -> 把 createVNode 生成的虚拟 dom 渲染为真实的 dom
+
+3. 封装的思路
+
+   1. 使用 createVNode 把写好的 message 组件生成虚拟 dom 并且传入必要的参数
+   2. 使用原生的方法 createElement 创建一个挂载节点 div
+   3. 调用 render 方法把 VNode 和挂载节点传入 完成正式的渲染
+
+4. 坑: 同一个文件夹中如果同时存在多个 index 开头的文件 index.js -> index.vue
+
+# 购物车[简单的模型 比实际的购物车简单一些 足够理解流程]
+
+1. 加入购物车
+   调用添加接口 -> 后端会生成一个新的购物车列表 list -> 再次调用获取购物车列表的接口
+   -> 存入 vuex [ls] -> 渲染
+
+   易错点: actions [ctx, { skuId, count}]-> dispatch('action', {skuId, count})
+
+2. 删除购物车
+
+   删除接口 -> 后端更新 list -> 再次调用获取购物车列表的接口 -> 存入 vuex -> 视图【getters】
+
+3. getters
+   基于 state 的计算属性 你变我也变
+
+   总钱数: 把 list 中每一项的单价乘以数量累加
+   总数量: 把 list 中每一项的 count 值累加
+
+   reduce:累加方法 list.reduce((p, c)=> p + c, 0) [c 的位置根据业务情况做相应修改即可]
+```
+
 # 路由的缓存
 
 1. 机制: path 不变的情况下 占位符参数发生了变化 vue-router 会默认复用组件
