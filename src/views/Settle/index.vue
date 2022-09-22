@@ -19,7 +19,7 @@
               </ul>
             </div>
             <div class="action">
-              <XtxButton class="btn">切换地址</XtxButton>
+              <XtxButton class="btn" @click="switchAddress">切换地址</XtxButton>
               <XtxButton class="btn">添加地址</XtxButton>
             </div>
           </div>
@@ -101,16 +101,57 @@
       </div>
     </div>
   </div>
+  <!-- 弹框 -->
+  <XtxDialog :visible="addVisible" title="选择地址" @close="closeDialog">
+    <template #default>
+      <div class="addressWrapper">
+        <div
+          class="text item"
+          v-for="item in checkoutInfo.userAddresses"
+          :class="{ active: curAddress.id === item.id }"
+          :key="item.id"
+          @click="toggleAddress(item)"
+        >
+          <ul>
+            <li>
+              <span>收<i />货<i />人：</span>{{ item.receiver }}
+            </li>
+            <li><span>联系方式：</span>{{ item.contact }}</li>
+            <li>
+              <span>收货地址：</span>{{ item.fullLocation + item.address }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </template>
+    <template #footer>
+      <XtxButton type="gray" style="margin-right: 20px" @click="visible = false"
+        >取消</XtxButton
+      >
+      <XtxButton type="primary" @click="confirm">确认</XtxButton>
+    </template>
+  </XtxDialog>
 </template>
 <script>
 import { findCheckoutInfo } from '@/api/order'
 import { ref } from 'vue'
+/**
+ 1. 点击打开弹框   Dialog
+ 2. 渲染可选的用户地址列表
+ 3. 点击交互实现 点击哪个那个变成激活的状态
+    实现：点击哪一项哪一项变成激活样式
+    核心点：点击哪一项把当前点击项的下标值[id]记录下来 配合一个动态类名 根据这个记录下来的id做判断
+    如果可以匹配就拥有这个class类名 有了这个类名就有了激活的样式
+
+ 4. 点击确定按钮 把当前激活的项赋值给默认地址
+ */
 export default {
   name: 'XtxPayCheckoutPage',
   setup () {
     const checkoutInfo = ref({})
     // 默认地址
     const defaultAddress = ref({})
+    // 可选的地址列表
     async function loadInfo () {
       const res = await findCheckoutInfo()
       checkoutInfo.value = res.result
@@ -123,9 +164,32 @@ export default {
       }
     }
     loadInfo()
+    const addVisible = ref(false)
+    const switchAddress = () => {
+      addVisible.value = true
+    }
+    const closeDialog = () => {
+      addVisible.value = false
+    }
+
+    // 激活效果实现
+    const curAddress = ref({}) // 记录当前点击了谁
+    const toggleAddress = (cur) => {
+      curAddress.value = cur
+    }
+    const confirm = () => {
+      defaultAddress.value = curAddress.value
+      addVisible.value = false
+    }
     return {
       checkoutInfo,
-      defaultAddress
+      defaultAddress,
+      switchAddress,
+      addVisible,
+      closeDialog,
+      curAddress,
+      toggleAddress,
+      confirm
     }
   }
 }
@@ -280,5 +344,35 @@ export default {
   text-align: right;
   padding: 60px;
   border-top: 1px solid #f5f5f5;
+}
+</style>
+
+<style lang="less">
+.xtx-dialog {
+  .addressWrapper {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  .text {
+    flex: 1;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    &.item {
+      border: 1px solid #f5f5f5;
+      margin-bottom: 10px;
+      cursor: pointer;
+      &.active,
+      &:hover {
+        border-color: @xtxColor;
+        background: lighten(@xtxColor, 50%);
+      }
+      > ul {
+        padding: 10px;
+        font-size: 14px;
+        line-height: 30px;
+      }
+    }
+  }
 }
 </style>
