@@ -10,6 +10,7 @@ import Good from '@/views/Good'
 import Cart from '@/views/Cart'
 import Settle from '@/views/Settle'
 import Pay from '@/views/Pay'
+import PayCallback from '@/views/Pay/callback.vue'
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
         path: 'pay',
         component: Pay,
         name: 'pay'
+      },
+      {
+        path: '/pay/callback',
+        component: PayCallback,
+        name: 'payback'
       }
     ]
   },

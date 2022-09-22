@@ -21,5 +21,8 @@ module.exports = defineConfig({
       args[0].title = '严选商城' // 修改项目标题
       return args
     })
+  },
+  devServer: {
+    allowedHosts: 'all'
   }
 })
