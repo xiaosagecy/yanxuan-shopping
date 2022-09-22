@@ -1,4 +1,4 @@
-import { insertCart, findCartList, deleteCart } from '@/api/cart'
+import { insertCart, findCartList, deleteCart, updateCart, checkAllCart} from '@/api/cart'
 
 export default {
   namespaced: true,
@@ -14,6 +14,9 @@ export default {
       // 先找到对应的skuId（使用find） ，再改selected值
       const item = state.cartList.find(item => item.skuId = skuId)
       item.selected = selected
+    },
+    isAll (state) {
+      return state.cartList.every(item => item.selected)
     }
   },
   actions: {
@@ -34,7 +37,36 @@ export default {
       const res = await findCartList()
       // 3.存入state
       ctx.commit('setCartList', res.result)
-    }
+    },
+    // 单选购物车实现
+    async fetchCheckCart (ctx, goods) {
+      // 1.调用单选接口
+      await updateCart(goods)
+      // 2. 获取购物车列表
+      const res = await findCartList()
+      // 3. 调用mutation存入state
+      ctx.commit('setCartList', res.result)
+    },
+     // 全选
+     async fetchAllCheck (ctx, selected) {
+      await checkAllCart({
+        selected,
+        ids: ctx.state.cartList.map(item => item.skuId)
+      })
+      // 2. 获取购物车列表
+      const res = await findCartList()
+      // 3. 调用mutation存入state
+      ctx.commit('setCartList', res.result)
+    },
+    // 数量修改
+    async fetchCount (ctx, goods) {
+      // 1.调用数量修改接口
+      await updateCart(goods)
+      // 2. 获取购物车列表
+      const res = await findCartList()
+      // 3. 调用mutation存入state
+      ctx.commit('setCartList', res.result)
+    },
   },
   getters: {
     // 商品总数：将cartList里每一项count字段累加起来

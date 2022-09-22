@@ -1,6 +1,7 @@
 <template>
   <div class="xtx-numbox">
-    <div class="label">数量</div>
+    <!-- 某些场景不显示 -->
+    <div class="label" v-if="isLabel">数量</div>
     <div class="numbox">
       <a href="javascript:;" @click="reduce">-</a>
       <input type="text" readonly :value="count" />
@@ -23,6 +24,10 @@ export default {
     },
     modelValue: {
       type: Number
+    },
+    isLabel: {
+      type: Boolean,
+      default: true // 优先保证之前的使用组件的地方不受影响 再去扩展参数
     }
   },
   setup (props, { emit }) {
@@ -41,6 +46,7 @@ export default {
       count.value++
       // 触发事件
       emit('update:modelValue', count.value)
+      emit('change', count.value)
     }
 
     const reduce = () => {
@@ -48,6 +54,7 @@ export default {
       count.value--
       // 触发事件
       emit('update:modelValue', count.value)
+      emit('change', count.value)
     }
 
     return { count, add, reduce }

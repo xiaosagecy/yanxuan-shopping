@@ -355,6 +355,38 @@ export default {
 
 ```
 
+# 数组find方法--场景购物车
+```js
+const cartList = [
+      {
+        id: "1223002",
+        skuId: "300334894",
+        name: "MFi认证苹果快充编织数据线（1.2米）",
+        attrsText: "颜色:夜黑+银白（两件装） 长度:升级加固加长版（1.2米）+12W双口充电器 ",
+        specs: [],
+        picture: "https://yanxuan-item.nosdn.127.net/c86961c7e22acb1b62c5493ccf6a4b03.png",
+        price: "129.80",
+        nowPrice: "129.80",
+        nowOriginalPrice: "129.80",
+        selected: true,
+        stock: 9450,
+        count: 2,
+        isEffective: true,
+        discount: null,
+        isCollect: false,
+        postFee: 7.00
+      }
+    ]
+
+    const item = cartList.find(item => item.skuId = 300334894)
+    // 但是这个值item是引用类型 item.selected 修改 原cartList[0].selected也发生修改
+    item.selected = false
+
+    console.log(item)
+    console.log(cartList)
+    console.log(item === cartList[0]) // true
+```
+
 ## Project setup
 ```
 yarn install
