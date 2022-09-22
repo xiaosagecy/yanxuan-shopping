@@ -8,6 +8,7 @@ import Home from '@/views/Home'
 import Category from '@/views/Category'
 import Good from '@/views/Good'
 import Cart from '@/views/Cart'
+import Settle from '@/views/Settle'
 
 const routes = [
   {
@@ -31,9 +32,14 @@ const routes = [
         name: 'good'
       },
       {
-        path: 'cart', 
+        path: 'cart',
         component: Cart,
         name: 'cart'
+      },
+      {
+        path: 'settle',
+        component: Settle,
+        name: 'settle'
       }
     ]
   },
