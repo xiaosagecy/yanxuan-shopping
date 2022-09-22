@@ -9,6 +9,7 @@ import Category from '@/views/Category'
 import Good from '@/views/Good'
 import Cart from '@/views/Cart'
 import Settle from '@/views/Settle'
+import Pay from '@/views/Pay'
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
         path: 'settle',
         component: Settle,
         name: 'settle'
+      },
+      {
+        path: 'pay',
+        component: Pay,
+        name: 'pay'
       }
     ]
   },

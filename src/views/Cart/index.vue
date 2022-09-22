@@ -127,6 +127,7 @@ export default {
       })
     }
     // 全选
+    // checkBox 点击 值会改变 就出发事件 ==> emit('change', checked.value) ==> selected
     const allChange = (selected) => {
       store.dispatch('cart/fetchAllCheck', selected)
     }

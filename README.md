@@ -248,6 +248,54 @@ vue3 v-model 语法糖的小变化
    reduce:累加方法 list.reduce((p, c)=> p + c, 0) [c 的位置根据业务情况做相应修改即可]
 ```
 
+# 知识回顾-06
+```
+# vuex + v-model
+
+1. 问题描述: 当 vuex 开启严格模式 并且组件通过 v-model 直接绑定了 vuex 中的 state 中的数据
+   由于 vuex 架构的限制 只容许通过提交 mutation 修改 而 v-model 由于语法糖的关系会绕过 mutation
+   直接修改数据 所以会报错
+
+2. 如何解决: 不走 v-model 还是通过提交 mutation 的方式
+
+   具体实施：[单选组件]
+
+   1. 单选组件以 vuex 中的数据为主回显状态 :model-value="i.selected"
+   2. 单选组件中进行状态切换的时候可以把最新的状态同步到 vuex 中 state 的位置 @change="change"
+      在 change 的回调中继续提交 mutation 函数修改数据
+
+3. 小的细节: 监听事件时除了默认事件参数如何添加额外的参数
+
+   ```vue
+   <checkBox @change="change" />
+   <!-- 获取到默认的事件参数加上额外的参数-->
+   <checkBox @change="(selected) => change(selected, i)" />
+   ```
+
+# 原生的数组方法
+
+1. 数组的查找方法  
+   find: 如果你想找到对应的项 然后操作它的话
+   findIndex: 如果找到它 然后删除它 index splice(index,1)
+
+2. 判断方法
+   every: 数组中的每一项必须都满足条件 -> true
+   some: 数组中只要一个满足条件 -> true
+
+# 数量组件优化
+
+1. 场景: 在开发的过程中突然发现之前写的组件需要增加额外的功能
+2. 解决：设计了一个新的 prop 参数 优先兼容之前用到的地方不受影响 default:true
+
+# tab 切换类交互的通用实现
+
+核心逻辑
+
+1.  点击时记录下来当前的点击项 [index / id / obj]
+2.  使用记录下来的标识和 v-for 遍历时生成的 item 做对比，控制一个动态类名
+    :class="{ active: curId === item.id}"
+```
+
 # 路由的缓存
 
 1. 机制: path 不变的情况下 占位符参数发生了变化 vue-router 会默认复用组件

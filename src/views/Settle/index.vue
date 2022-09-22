@@ -96,7 +96,7 @@
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <XtxButton type="primary">提交订单</XtxButton>
+          <XtxButton type="primary" @click="doCreateOrder">提交订单</XtxButton>
         </div>
       </div>
     </div>
@@ -133,8 +133,9 @@
   </XtxDialog>
 </template>
 <script>
-import { findCheckoutInfo } from '@/api/order'
+import { findCheckoutInfo, createOrder } from '@/api/order'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 /**
  1. 点击打开弹框   Dialog
  2. 渲染可选的用户地址列表
@@ -181,6 +182,33 @@ export default {
       defaultAddress.value = curAddress.value
       addVisible.value = false
     }
+
+    // 生成订单ID
+    const router = useRouter()
+    const doCreateOrder = async () => {
+      // 调用提交订单接口
+      const res = await createOrder({
+        payType: 1,
+        buyerMessage: '',
+        deliveryTimeType: 1,
+        addressId: defaultAddress.value.id,
+        goods: checkoutInfo.value.goods.map(item => {
+          return {
+            skuId: item.skuId,
+            count: item.count
+          }
+        })
+      })
+      console.log(res)
+      // 跳转路由携带参数
+      router.push({
+        path: '/pay',
+        query: {
+          id: res.result.id
+        }
+      })
+    }
+
     return {
       checkoutInfo,
       defaultAddress,
@@ -189,7 +217,8 @@ export default {
       closeDialog,
       curAddress,
       toggleAddress,
-      confirm
+      confirm,
+      doCreateOrder
     }
   }
 }
