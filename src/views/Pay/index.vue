@@ -6,10 +6,11 @@
         <span class="icon iconfont icon-queren2"></span>
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
-          <p>
+          <p v-if="orderInfo.countdown > -1">
             支付还剩 <span>{{ formatTime }}</span
             >, 超时后将取消订单
           </p>
+          <p  v-else style="color: red;">订单支付已超时</p>
         </div>
         <div class="amount">
           <span>应付总额：</span>
@@ -22,7 +23,7 @@
         <div class="item">
           <p>支付平台</p>
           <a class="btn wx" href="javascript:;"></a>
-          <a class="btn alipay" :href="payUrl"></a>
+          <a class="btn alipay" :href="payUrl" target="_blank"></a>
         </div>
         <div class="item">
           <p>支付方式</p>
@@ -60,7 +61,7 @@ export default {
     // const payUrl = '后台服务基准地址+支付页面地址+订单ID+回跳地址'
     // 跳转一个a连接地址 -> get请求
     const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
-    const redirectUrl = encodeURIComponent('http://www.corho.com:8080/#/pay/callback')
+    const redirectUrl = encodeURIComponent('http://localhost:8080/#/pay/callback')
     const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
     return {
       orderInfo,

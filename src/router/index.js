@@ -11,6 +11,8 @@ import Cart from '@/views/Cart'
 import Settle from '@/views/Settle'
 import Pay from '@/views/Pay'
 import PayCallback from '@/views/Pay/callback.vue'
+import Order from '@/views/Order'
+import Member from '@/views/Member'
 
 const routes = [
   {
@@ -49,10 +51,20 @@ const routes = [
         name: 'pay'
       },
       {
-        path: '/pay/callback',
+        path: 'pay/callback',
         component: PayCallback,
         name: 'payback'
-      }
+      },
+      { 
+        path: 'member',
+        component: Member,
+        name: 'member'
+      },
+      {
+        path: 'order',
+        component: Order,
+        name: 'order'
+      },
     ]
   },
   {

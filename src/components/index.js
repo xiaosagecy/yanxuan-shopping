@@ -11,6 +11,7 @@ import Dialog from './Dialog'
 import Sku from './Sku'
 import ImageView from './ImageView'
 import XtxNumber from './NumberBox'
+import StepItem from './StepItme'
 
 export default {
   install (app) {
@@ -27,5 +28,6 @@ export default {
     app.component(Sku.name, Sku)
     app.component(ImageView.name, ImageView)
     app.component(XtxNumber.name, XtxNumber)
+    app.component(StepItem.name, StepItem)
   }
 }
